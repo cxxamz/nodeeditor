@@ -32,7 +32,7 @@ NodeGraphicsObject::NodeGraphicsObject(BasicGraphicsScene &scene, NodeId nodeId)
 
     setLockedState();
 
-    setCacheMode(QGraphicsItem::DeviceCoordinateCache);
+    // setCacheMode(QGraphicsItem::DeviceCoordinateCache);
 
     QJsonObject nodeStyleJson = _graphModel.nodeData(_nodeId, NodeRole::Style).toJsonObject();
 
