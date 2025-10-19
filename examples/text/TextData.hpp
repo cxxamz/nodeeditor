@@ -14,12 +14,14 @@ public:
 
     TextData(QString const &text)
         : _text(text)
+        , _datatype(std::make_shared<QtNodes::StaticDataType>("text", "Text"))
     {}
 
-    NodeDataType type() const override { return NodeDataType{"text", "Text"}; }
+    NodeDataType type() const override { return _datatype; }
 
     QString text() const { return _text; }
 
 private:
     QString _text;
+    NodeDataType _datatype;
 };

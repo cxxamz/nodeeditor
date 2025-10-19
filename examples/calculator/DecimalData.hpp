@@ -12,13 +12,15 @@ class DecimalData : public NodeData
 public:
     DecimalData()
         : _number(0.0)
+        , _datatype(std::make_shared<QtNodes::StaticDataType>("decimal", "Decimal"))
     {}
 
     DecimalData(double const number)
         : _number(number)
+        , _datatype(std::make_shared<QtNodes::StaticDataType>("decimal", "Decimal"))
     {}
 
-    NodeDataType type() const override { return NodeDataType{"decimal", "Decimal"}; }
+    NodeDataType type() const override { return _datatype; }
 
     double number() const { return _number; }
 
@@ -26,4 +28,5 @@ public:
 
 private:
     double _number;
+    NodeDataType _datatype;
 };

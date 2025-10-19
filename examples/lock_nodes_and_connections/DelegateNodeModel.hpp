@@ -16,7 +16,13 @@ using QtNodes::PortType;
 class SimpleNodeData : public NodeData
 {
 public:
-    NodeDataType type() const override { return NodeDataType{"SimpleData", "Simple Data"}; }
+    NodeDataType type() const override { return _datatype; }
+public:
+    SimpleNodeData() 
+        : _datatype(std::make_shared<QtNodes::StaticDataType>("SimpleData", "Simple Data")) 
+    {}
+private:
+    NodeDataType _datatype;
 };
 
 /// The model dictates the number of inputs and outputs for the Node.

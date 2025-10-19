@@ -18,7 +18,13 @@ using QtNodes::PortType;
 class MyNodeData : public NodeData
 {
 public:
-    NodeDataType type() const override { return NodeDataType{"MyNodeData", "My Node Data"}; }
+    NodeDataType type() const override { return _datatype; }
+public:
+    MyNodeData() 
+        : _datatype(std::make_shared<QtNodes::StaticDataType>("MyNodeData", "My Node Data")) 
+    {}
+private:
+    NodeDataType _datatype;
 };
 
 //------------------------------------------------------------------------------

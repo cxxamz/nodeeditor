@@ -16,16 +16,14 @@ public:
 
     PixmapData(QPixmap const &pixmap)
         : _pixmap(pixmap)
+        , _datatype(std::make_shared<QtNodes::StaticDataType>("pixmap", "P"))
     {}
 
-    NodeDataType type() const override
-    {
-        //       id      name
-        return {"pixmap", "P"};
-    }
+    NodeDataType type() const override { return _datatype; }
 
     QPixmap pixmap() const { return _pixmap; }
 
 private:
     QPixmap _pixmap;
+    NodeDataType _datatype;
 };

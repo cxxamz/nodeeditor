@@ -25,7 +25,10 @@ public:
     {
         return (portType == PortType::In) ? 2 : 1;
     }
-    QtNodes::NodeDataType dataType(QtNodes::PortType, QtNodes::PortIndex) const override { return {}; }
+    QtNodes::NodeDataType dataType(QtNodes::PortType, QtNodes::PortIndex) const override 
+    { 
+        return std::make_shared<QtNodes::StaticDataType>("", ""); 
+    }
     void setInData(std::shared_ptr<QtNodes::NodeData>, QtNodes::PortIndex const) override {}
     std::shared_ptr<QtNodes::NodeData> outData(QtNodes::PortIndex const) override { return nullptr; }
     QWidget* embeddedWidget() override { return nullptr; }

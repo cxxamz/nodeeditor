@@ -20,19 +20,22 @@ using QtNodes::PortType;
 class TestData : public NodeData
 {
 public:
-    TestData() {}
-    TestData(QString text) : _text(text) {}
+    TestData() 
+        : _datatype(std::make_shared<QtNodes::StaticDataType>("TestData", "Test Data")) 
+    {}
+    TestData(QString text) 
+        : _text(text) 
+        , _datatype(std::make_shared<QtNodes::StaticDataType>("TestData", "Test Data")) 
+    {}
 
-    NodeDataType type() const override
-    {
-        return NodeDataType{"TestData", "Test Data"};
-    }
+    NodeDataType type() const override { return _datatype; }
 
     QString text() const { return _text; }
     void setText(const QString& text) { _text = text; }
 
 private:
     QString _text;
+    NodeDataType _datatype;
 };
 
 
