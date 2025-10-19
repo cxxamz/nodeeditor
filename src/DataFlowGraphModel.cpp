@@ -143,9 +143,40 @@ bool DataFlowGraphModel::connectionPossible(ConnectionId const connectionId) con
         return connected.empty() || (policy == ConnectionPolicy::Many);
     };
 
-    bool const basicChecks = getDataType(PortType::Out)->same(getDataType(PortType::In))
+#if 1
+    auto port_inp = getDataType(PortType::In); 
+    auto port_otp = getDataType(PortType::Out); 
+
+    auto inp = std::dynamic_pointer_cast<DynamicDataType>(port_inp);
+    auto otp = std::dynamic_pointer_cast<DynamicDataType>(port_otp);
+
+    auto const ptsame = port_otp->type() == port_inp->type();
+    auto const vacant = portVacant(PortType::Out) && portVacant(PortType::In);
+    auto const bounds = checkPortBounds(PortType::Out) && checkPortBounds(PortType::In);
+
+    auto basicChecks = vacant && bounds;
+    switch (int(bool(inp)) * 2 + int(bool(otp)) * 1) 
+    {
+        case  1: basicChecks &= otp->null() ? true : ptsame; break;
+        case  2: basicChecks &= inp->null() ? true : ptsame; break;
+        case  3: {
+            basicChecks = false;
+            // if (!otp->null() && !inp->null()) 
+            // {
+            //     basicChecks &= ptsame;
+            // } 
+            // else if (otp->null() && inp->null()) 
+            // {
+            //     basicChecks = false;
+            // }
+        } break;
+        default: basicChecks &= ptsame; break;
+    } 
+#else
+    bool const basicChecks = getDataType(PortType::Out)->type() == getDataType(PortType::In)->type()
                              && portVacant(PortType::Out) && portVacant(PortType::In)
                              && checkPortBounds(PortType::Out) && checkPortBounds(PortType::In);
+#endif
 
     // In data-flow mode (this class) it's important to forbid graph loops.
     // We perform depth-first graph traversal starting from the "Input" port of

@@ -109,7 +109,7 @@ void DefaultConnectionPainter::drawNormalLine(QPainter *painter, ConnectionGraph
             = graphModel.portData(cId.inNodeId, PortType::In, cId.inPortIndex, PortRole::DataType)
                   .value<NodeDataType>();
 
-        useGradientColor = !dataTypeOut->same(dataTypeIn);
+        useGradientColor = dataTypeOut->type() != dataTypeIn->type();
 
         normalColorOut = connectionStyle.normalColor(dataTypeOut->type());
         normalColorIn = connectionStyle.normalColor(dataTypeIn->type());

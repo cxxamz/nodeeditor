@@ -17,16 +17,13 @@ struct NODE_EDITOR_PUBLIC DataType
 {
     virtual auto type() const -> QString { return {}; }
     virtual auto name() const -> QString { return {}; }
-    virtual auto same(std::shared_ptr<DataType const> const& _) const -> bool
-    {
-        assert(_); return type() == _->type();
-    }
 public:
     virtual ~DataType() = default;
 };
 
 struct NODE_EDITOR_PUBLIC StaticDataType : public DataType 
 {
+protected:
     QString _type;
     QString _name;
 public:
@@ -35,6 +32,11 @@ public:
 public:
     StaticDataType(QString const& type_, QString const& name_) : _type(type_), _name(name_) {}
 }; 
+
+struct NODE_EDITOR_PUBLIC DynamicDataType : public DataType 
+{
+    virtual auto null() const -> bool { return true; }
+};
 
 using NodeDataType = std::shared_ptr<DataType>;
 
